@@ -1395,4 +1395,35 @@ describe("TestTriggers", function()
 
 		assert.True(build.calcsTab.mainOutput.SkillTriggerRate ~= nil)
     end)
+
+	it("Trigger Geofri's Devotion", function()
+        build.itemsTab:CreateDisplayItemFromRaw([[Geofri's Devotion
+		Brass Maul
+		Variant: Pre 2.6.0
+		Variant: Pre 3.11.0
+		Variant: Current
+		Selected Variant: 3
+		Quality: 20
+		Sockets: R-R-R-R-R-R
+		LevelReq: 61
+		Implicits: 2
+		{variant:1}20% increased Stun Duration on Enemies
+		{variant:2,3}30% increased Stun Duration on Enemies
+		Trigger Level 20 Elemental Warding on Melee Hit while Cursed
+		200% increased Physical Damage
+		{variant:1,2}{range:0.5}Adds (50-56) to (73-78) Physical Damage
+		{variant:3}{range:0.5}Adds (42-47) to (66-71) Physical Damage
+		Adds 11 to 23 Cold Damage
+		{range:0.5}(10-20)% increased Stun Duration on Enemies
+		Never deal Critical Strikes]])
+        build.itemsTab:AddDisplayItem()
+        runCallback("OnFrame")
+		
+		build.skillsTab:PasteSocketGroup("Smite 20/0 Default  1\n")
+        runCallback("OnFrame")
+		
+		assert.True(build.calcsTab.mainOutput.SkillTriggerRate ~= nil)
+    end)
+	
 end)
+

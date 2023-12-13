@@ -48,4 +48,58 @@ describe("TestAttacks", function()
         assert.are.equals(22, build.calcsTab.mainEnv.player.mainSkill.skillModList:Sum("INC", { flags = ModFlag.Attack }, "Damage"))
 
     end)
+
+    local tolerance = 0.1
+    it("rounds down a positive number without decimal places", function()
+        assert.is.equal(floor(5.678), 5)
+    end)
+    
+    it("rounds down a negative number without decimal places", function()
+    assert.is.equal(floor(-3.456), -4)
+    end)
+
+    it("rounds down a positive number with decimal places", function()
+    assert.is.near(floor(12.345, 1), 12.3, tolerance)
+    end)
+
+    it("rounds down a negative number with decimal places", function()
+    assert.is.near(floor(-7.891, 2), -7.89, tolerance)
+    end)
+
+    it("should stringify a string", function()
+        local result = stringify("Hello, World!")
+        assert.is_equal("Hello, World!", result)
+      end)
+    
+      it("should stringify a number", function()
+        local result = stringify(42)
+        assert.is_equal("42", result)
+      end)
+    
+      it("should stringify a table with string and number keys", function()
+        local input = { name = "John", age = 30, city = "New York" }
+        local result = stringify(input)
+        assert.is_equal("{\n\t[\"age\"] = 30, \n\t[\"city\"] = \"New York\", \n\t[\"name\"] = \"John\", \n}", result)
+      end)
+    
+      it("should stringify a table with nested tables", function()
+        local input = {
+          person = { name = "Alice", age = 25 },
+          location = { city = "Paris", country = "France" }
+        }
+        local result = stringify(input)
+        assert.is_equal("{\n\t[\"location\"] = {\n\t\t[\"city\"] = \"Paris\", \n\t\t[\"country\"] = \"France\", \n\t}, \n\t[\"person\"] = {\n\t\t[\"age\"] = 25, \n\t\t[\"name\"] = \"Alice\", \n\t}, \n}", result)
+      end)
+    
+      it("should handle boolean values", function()
+        local input = { isTrue = true, isFalse = false }
+        local result = stringify(input)
+        assert.is_equal("{\n\t[\"isFalse\"] = false, \n\t[\"isTrue\"] = true, \n}", result)
+      end)
+    
+      it("should handle nested tables with boolean values", function()
+        local input = { person = { isAdult = true, hasChildren = false } }
+        local result = stringify(input)
+        assert.is_equal("{\n\t[\"person\"] = {\n\t\t[\"hasChildren\"] = false, \n\t\t[\"isAdult\"] = true, \n\t}, \n}", result)
+      end)
 end)
